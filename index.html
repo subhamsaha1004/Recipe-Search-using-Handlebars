@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+   <head>
+      <title>Handlebars Intro</title>
+      <link rel="stylesheet" href="css/main.css" />
+      <script type="text/javascript" src="js/handlebars.js"></script>
+      <!-- <script type="text/javascript" src="js/handlebars.runtime.js"></script> -->
+   </head>
+   <body>
+   	<div id="content">
+			<h1>HighFive - 
+				<span id='BOS'>Recipe search powered by <a id='Logo' href='http://www.recipepuppy.com'>Recipe Puppy</a></span>
+				<input class="btn floatR" id="searchBtn" type="button" value="Search" />
+				<input class="inp floatR" id="ingredients" type="text" placeholder="Search with ingridients (comma separated) to get suggestions" />
+				<input class="inp floatR" id="recipe" type="text" placeholder="Search for recipes" />
+			</h1>
+			<h2>Top 5 Results Displayed (Click on each recipe to go the respective pages)</h2>
+			<div id="handlebarsContent">
+	      <script id="Handlebars-Template" type="text/x-handlebars-template">
+	      	{{#if Recipes.results}}
+						{{#each Recipes.results}}
+							<div class='box'>
+								<img class='Thumb floatL' src="{{{thumbnail}}}" alt="{{title}}" width="80" height="87">
+								<div class="boxContent floatL">
+									<h3><a href="{{href}}">{{title}}</a></h3>
+									<p>Ingredients:</p>
+									<ul>
+									  {{#each ingredientsArr}}
+									    <li>{{this}}</li>
+									  {{/each}}
+									</ul>
+								</div>
+								<div class="clear"></div>
+							</div>
+						{{/each}}
+					{{else}}
+						<div class="box">
+							<h3>No data found..PLease enter some other term and try again</h3>
+						</div>
+					{{/if}}
+	      </script>
+    	</div>
+    </div>
+
+      <script>
+				(function(){
+					// AjaxManager
+					var AjaxManager = (function (){
+						var Ajax = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+
+						return function(ingredients, recipe){
+							Ajax.onreadystatechange = function(){
+							  if (Ajax.readyState == 4 && Ajax.status == 200){
+							    //Parse the JSON data
+							    var RecipeData = JSON.parse(Ajax.responseText);
+							    //console.log(RecipeData);
+
+							    // Reset length to only top 5
+							    if(RecipeData.results.length > 5){
+							    	RecipeData.results.length = 5;
+							    }
+
+							    // Turning the ingriedients string into an array and storing on the object itself
+							    for(var recipe in RecipeData.results){
+							    	RecipeData.results[recipe].ingredientsArr = RecipeData.results[recipe].ingredients.replace(/\,/g, "").split(" ");
+							    }
+							     
+							    //Generate some HTML code from the compiled Template
+							    var HTML = Template({ Recipes : RecipeData });
+							     
+							    //Replace the body section with the new code.
+							    $("#handlebarsContent")[0].innerHTML = HTML;
+
+							    $("#searchBtn")[0].value = "Search";
+							  }
+							}
+							
+							Ajax.open("GET","Recipe.php?i=" + ingredients + "&r=" + recipe, true);
+							Ajax.send();
+						}
+					}());
+
+					//Get the Template from above
+					var Source = document.getElementById("Handlebars-Template").textContent,
+							Template = Handlebars.compile(Source);
+
+					var	ingredients = "banana",
+							recipe = "fruit",
+							$ = document.querySelectorAll.bind(document);
+
+					document.addEventListener("click", function(e){
+						var target = event.target;
+
+						if(target.id === "searchBtn"){
+							var ingredients = $("#ingredients")[0].value,
+									recipe = $("#recipe")[0].value;
+
+							$("#searchBtn")[0].value = "Searching...";
+							AjaxManager(ingredients, recipe);
+						}
+
+					}, false);
+
+					AjaxManager(ingredients, recipe);
+
+				}());
+ 
+			</script>
+   </body>
+</html>

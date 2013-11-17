@@ -1,0 +1,23 @@
+body { margin: 0; padding: 0; background: #fff; }
+a { text-decoration: none; color: #ee1821; }
+a:hover { text-decoration: underline; }
+.floatL { float: left; }
+.floatR { float: right; }
+.clear { clear: both; }
+#content { margin: 10px 20px; }
+#content h1 { padding: 3px 10px; margin: 10px 0; border-bottom: 1px solid; color: #3498db; overflow: hidden; }
+#content h1 span { font-size: 20px; font-style: oblique; color: #68A203; }
+#content h1 a { font-size: 20px; font-style: italic; color: #fff; background: #06B429; padding: 2px 10px; border-radius: 3px; text-shadow: 1px 1px #000; position: relative; top: -4px; }
+#content h2 { margin: 5px 6px 15px; font-size: 18px; font-weight: normal; color: #06ACC2; box-shadow: 0px 5px 5px -5px #B4B3B3; padding: 0 10px 3px; }
+.boxContent { min-width: 100px; max-width: 1200px; margin-top: -2px; }
+.box { padding: 10px; border-bottom: 1px solid #FDC2C4; background: #FDEAEA; margin-bottom: 1px; }
+.box h3 { margin: 0; color: #0CD104; }
+.box h3 a { color: #0CD104; font-size: 18px; display: inline-block; border-bottom: 1px dashed;}
+.box h3 a:hover { border-bottom-style: solid; text-decoration: none; }
+.box p { margin: 5px 0; }
+.box img { margin: 0 10px 0 0; }
+.box ul { list-style: none outside none; padding: 0; margin: 0; overflow: hidden; }
+.box  ul li { display: inline; padding: 3px 5px; margin: 5px; background: #ee1821; color: #fff; float: left; text-shadow: 1px 1px #000; border-radius: 3px; }
+.inp { border: 2px solid #3498db; display: inline-block; box-sizing:border-box; height: 30px; width: 320px; margin-left: 15px; padding: 5px; font-size: 11px; margin-top: 3px; }
+.btn { background: #3498db; border-width: 0 1px 1px 0; border-style: solid; border-color: #045D99; margin-top: 3px; height: 30px; padding: 0 10px; color: #fff; text-shadow:1px 1px #000; cursor: pointer; margin-left: 10px; }
+.inp:focus{ outline: none; box-shadow: 0 0 3px #666; }
